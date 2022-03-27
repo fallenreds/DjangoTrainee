@@ -7,3 +7,4 @@ admin.site.register(Teg)
 admin.site.register(Post)
 admin.site.register(Comment)
 
+

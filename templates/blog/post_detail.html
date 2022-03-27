@@ -9,10 +9,8 @@
         <p><a href = "{% url 'category' category.slug %}">{{category.name}} </a></p>
     {% endfor %}
 <hr>
-    {% for post in post_list %}
-        <h2><a href = "{% url 'category' post.slug %}">{{post.name}} </a></h2>
+        <h2>{{post.title}}</h2>
         <p>{{ post.mini_text }}</p>
-        <small><p>{{ post.created_date }}</p></small>
-    {% endfor %}
+        <small><p>{{ post.published_date }}</p></small>
 </body>
 </html>
