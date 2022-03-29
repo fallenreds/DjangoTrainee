@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TEGS</title>
+</head>
+<body>
+    {% for category in categories %}
+        <p><a href = "{% url 'category' category.slug %}">{{category.name}} </a></p>
+    {% endfor %}
+    <br>
+    {% for post in post_list %}
+    {{post.title}}
+    {% endfor %}
+</body>
+</html>

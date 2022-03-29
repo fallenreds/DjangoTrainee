@@ -14,7 +14,7 @@
         <p>Категория  - {{post.category}}</p>
         {# Теги - {%for tag in post.tags.all%} - комент HTML#}
         Теги - {%for tag in post.get_tags%}
-                    {{tag.name}},
+         <a href = "{{ tag.get_absolute_url }}">{{tag.name}}</a>
                {%endfor%}
         <br>
         <small>Автор: {{ post.author }} - {{post.published_date}}</small>

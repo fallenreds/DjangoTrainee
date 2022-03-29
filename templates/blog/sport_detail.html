@@ -6,16 +6,14 @@
 </head>
 <body>
     <h1>SPORT</h1>
-    {% for category in categories %}
-        <p><a href = "{% url 'category' category.slug %}">{{category.name}} </a></p>
-    {% endfor %}
+    
 <hr>
         <h2>{{post.title}}</h2>
         <p>{{ post.mini_text }}</p>
         <p>Категория  - {{post.category}}</p>
         {# Теги - {%for tag in post.tags.all%} - комент HTML#}
         Теги - {%for tag in post.get_tags%}
-                    {{tag.name}},
+                    <a href = "{{ tag.get_absolute_url }}">{{tag.name}}</a>
                {%endfor%}
         <br>
         <small>Автор: {{ post.author }} - {{post.published_date}}</small>
