@@ -62,6 +62,7 @@ class Post(models.Model):
     viewed = models.PositiveIntegerField(verbose_name="Просмотрено", default=0)
     status = models.BooleanField(verbose_name="Для зарегестрированых?", default=False)
     sort = models.PositiveIntegerField("Порядок", default=0)
+    template = models.CharField(verbose_name="Шаблон", max_length=500, default='blog/post_detail.html')
 
     """Связи"""
     # set_null - при удалении не удаляется пост(cascade - удаляется), blank - обезательно ли поле, null - может ли быть пустым
@@ -72,8 +73,14 @@ class Post(models.Model):
     def __str__(self):
         return self.title
 
+    def get_tags(self):
+        return self.tags.all()
+
     def get_absolute_url(self):
         return reverse("detail_post", kwargs={"category": self.category.slug, "slug": self.slug})
+
+    def get_comments_count(self):
+        return self.comment.count()
 
     class Meta:
         verbose_name = "Новость"
@@ -90,7 +97,7 @@ class Comment(models.Model):
         return self.text
 
     author = models.ForeignKey(User, verbose_name='Автор', on_delete=models.CASCADE)
-    post = models.ForeignKey(Post, verbose_name='Статья', on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, verbose_name='Статья', on_delete=models.CASCADE, related_name="comment")
 
     class Meta:
         verbose_name = "Коментарий"

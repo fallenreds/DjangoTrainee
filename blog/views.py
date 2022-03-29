@@ -2,7 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.views import View
 from datetime import datetime
-from .models import Category, Post
+from .models import Category, Post, Comment
 
 class HomeView(View):
     """Home page"""
@@ -18,7 +18,8 @@ class PostDetailView(View):
     def get(self, request, slug, category):
         category_list = Category.objects.all()
         post = Post.objects.get(slug=slug)
-        return render(request, "blog/post_detail.html", {"categories": category_list, 'post': post})
+        comments = Comment.objects.filter(post=post)
+        return render(request, post.template, {"categories": category_list, 'post': post, "comments": comments})
 
 class CategoryView(View):
     """Вывод статей категорий"""
