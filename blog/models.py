@@ -24,6 +24,8 @@ class Category(MPTTModel):
         blank=True,
         related_name='children'
     )
+    def get_absotule_url(self):
+        return reverse("category", kwargs={"category_slug": self.slug})
 
     def __str__(self):
         return self.name
@@ -78,6 +80,9 @@ class Post(models.Model):
 
     def get_tags(self):
         return self.tags.all()
+
+    def get_category_template(self):
+        return self.category.template
 
     def get_absolute_url(self):
         return reverse("detail_post", kwargs={"category": self.category.slug, "slug": self.slug})

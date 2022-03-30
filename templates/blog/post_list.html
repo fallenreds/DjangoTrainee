@@ -6,9 +6,10 @@
 </head>
 <body>
     {% for category in categories %}
-        <p><a href = "{% url 'category' category.slug %}">{{category.name}} </a></p>
+        <p><a href = "{{ category.get_absotule_url }}">{{category.name}} </a></p>
     {% endfor %}
 <hr>
+    {% if post_list %}
     {% for post in post_list %}
         <h2><a href = "{{ post.get_absolute_url }}">{{post.title}} </a></h2>
         <p>{{ post.mini_text }}</p>
@@ -16,5 +17,8 @@
     <small><p>Просмотрено - {{post.viewed}}</p></small>
     <small><p>Колисество комментраниев - {{post.get_comments_count}}</p></small>
     {% endfor %}
+    {%else%}
+    <h1>Постов нет</h1>
+    {%endif%}
 </body>
 </html>
