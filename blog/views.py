@@ -1,15 +1,14 @@
 from django.http import HttpResponse
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.views import View
 from datetime import datetime
 from .models import Category, Post, Comment, Teg
-
-
-
+from .forms import CommentForm
 
 
 class PostListView(View):
     """Вывод статей категорий"""
+
     def get_queryset(self):
         return Post.objects.filter(published=True, published_date__lte=datetime.now())
 
@@ -32,7 +31,18 @@ class PostDetailView(View):
     """Вывод информации статьи"""
 
     def get(self, request, **kwargs):
+        form = CommentForm()
         category_list = Category.objects.filter(published=True)
         post = get_object_or_404(Post, slug=kwargs.get("slug"))
         comments = Comment.objects.filter(post=post)
-        return render(request, post.template, {"categories": category_list, 'post': post, "comments": comments})
+        return render(request, post.template,
+                      {"categories": category_list, 'post': post, "comments": comments, "form": form})
+
+    def post(self, request, **kwargs):
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            form = form.save(commit=False)
+            form.post = Post.objects.get(slug=kwargs.get("slug"))
+            form.author = request.user
+            form.save()
+        return redirect(request.path)

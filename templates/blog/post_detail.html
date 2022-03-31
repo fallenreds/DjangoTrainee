@@ -25,10 +25,22 @@
 
 
     <h4>Комментарии</h4>
+
+    {% if user.is_authenticated %}
+        <form action="" method="post">
+            {% csrf_token %}
+            {{form}}
+            <input name ="post" type="hidden" value="{{post.id}}">
+            <button type = "submit">Отправить</button>
+        </form>
+    {% else %}
+        <p>Что бы оставить коментарий войдите на сайт </p>
+    {% endif %}
+
     {% for coment in comments%}
         Пользователь - {{coment.author}}<br>
-        {{coment.text}}<br>
-        Добавлен - {{coment.created_date}}<br><br>
+         {{coment.text}}<br>
+         Добавлен - {{coment.created_date}}<br><br>
     {%endfor%}
 </body>
 </html>
