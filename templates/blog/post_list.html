@@ -3,9 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    {% load mptt_tags post_tags  %}
 </head>
 <body>
-    {% for category in categories %}
+    {% total_categories  as queries %}
+    {% for category in queries %}
         <p><a href = "{{ category.get_absotule_url }}">{{category.name}} </a></p>
     {% endfor %}
 <hr>

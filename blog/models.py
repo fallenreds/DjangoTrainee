@@ -34,6 +34,8 @@ class Category(MPTTModel):
         verbose_name = "Категория"
         verbose_name_plural = "Категории"
 
+    class MPTTMeta:
+        order_insertion_by = ('sort',)
 
 class Teg(models.Model):
     """Модель тегов"""
@@ -93,6 +95,7 @@ class Post(models.Model):
     class Meta:
         verbose_name = "Новость"
         verbose_name_plural = "Новости"
+        ordering = ["sort", "-published_date"]
 
 
 class Comment(models.Model):

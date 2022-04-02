@@ -2,7 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views import View
 from datetime import datetime
-from .models import Category, Post, Comment, Teg
+from .models import Category, Post, Comment
 from .forms import CommentForm
 
 

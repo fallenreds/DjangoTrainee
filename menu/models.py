@@ -12,7 +12,10 @@ class Menu(models.Model):
     def __str__(self):
         return self.name
 
+    def items(self):
+        return self.menuitems_set.all()
     class Meta:
+
         verbose_name = "Меню"
         verbose_name_plural = "Меню"
 
@@ -33,5 +36,5 @@ class MenuItems(MPTTModel):
         return self.name
 
     class Meta:
-        verbose_name = "ПодМеню"
-        verbose_name_plural = "ПодМеню"
+        verbose_name = "Пункы меню"
+        verbose_name_plural = "Пункты меню"
